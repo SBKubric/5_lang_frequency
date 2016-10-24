@@ -1,29 +1,34 @@
+import os
 import re
 from collections import Counter
 
 
 def load_data(filepath):
-    if filepath != '':
-        with open(filepath) as data_file:
+    if not os.path.isfile(filepath):
+        return None
+    with open(filepath) as data_file:
             data = data_file.read()
-    else:
-        data = -1
     return data
 
 
 def get_most_frequent_words(text):
     words = re.findall(r'\w+', text)
-    cap_words = [word.upper() for word in words]
-    word_counts = Counter(cap_words)
+    capital_words = [word.upper() for word in words]
+    word_counts = Counter(capital_words)
 
-    s = 'Most common: '
-    for letter, count in word_counts.most_common(10):
-        s = format('%s%s ' % (s, letter.lower()))
-    print(s)
+    most_common = {(count, letter.lower()) for letter, count in word_counts.most_common(10)}
+    return most_common
 
 if __name__ == '__main__':
-    print('Enter the filepath:')
-    text = -1
-    while text == -1:
+    print('Enter the filepath: ', end='')
+    text = load_data(input())
+    while text is None:
+        print('Oops, looks like you have a mistype in filepath!'
+              '\nPlease, enter the valid path to the file: ', end='')
         text = load_data(input())
-    get_most_frequent_words(text)
+    most_frequent_words = get_most_frequent_words(text)
+
+    print('The most common words: ', end='')
+    for count, word in most_frequent_words:
+        print('%s: %s times; ' % (word, count), end='')
+    print()
