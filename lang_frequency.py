@@ -17,7 +17,14 @@ def get_most_frequent_words(text):
     word_counts = Counter(capital_words)
 
     most_common = {(count, letter.lower()) for letter, count in word_counts.most_common(10)}
-    return most_common
+    return sorted(most_common, reverse=True)
+
+
+def print_most_frequent_words(most_common):
+    print('The most common words: ', end='')
+    for count, word in most_common:
+        print('\"%s\" – %s inclusions; ' % (word, count), end='')
+    print()
 
 if __name__ == '__main__':
     print('Enter the filepath: ', end='')
@@ -27,8 +34,4 @@ if __name__ == '__main__':
               '\nPlease, enter the valid path to the file: ', end='')
         text = load_data(input())
     most_frequent_words = get_most_frequent_words(text)
-
-    print('The most common words: ', end='')
-    for count, word in most_frequent_words:
-        print('%s: %s times; ' % (word, count), end='')
-    print()
+    print_most_frequent_words(most_frequent_words)
