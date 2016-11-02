@@ -7,7 +7,7 @@ def load_data(filepath):
     if not os.path.isfile(filepath):
         return None
     with open(filepath) as data_file:
-            data = data_file.read()
+        data = data_file.read()
     return data
 
 
@@ -26,12 +26,11 @@ def print_most_frequent_words(most_common):
         print('\"%s\" – %s inclusions; ' % (word, count), end='')
     print()
 
+
 if __name__ == '__main__':
-    print('Enter the filepath: ', end='')
-    text = load_data(input())
+    text = load_data(input('Enter the file\'s path:\n => '))
     while text is None:
-        print('Oops, looks like you have a mistype in filepath!'
-              '\nPlease, enter the valid path to the file: ', end='')
-        text = load_data(input())
+        text = load_data(input('Oops, looks like you have a mistype in filepath!'
+                               '\nPlease, enter the valid path to the file:\n=> '))
     most_frequent_words = get_most_frequent_words(text)
     print_most_frequent_words(most_frequent_words)
